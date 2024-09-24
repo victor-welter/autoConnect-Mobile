@@ -1,6 +1,31 @@
+import 'package:auto_connect_mobile/router_app.dart';
+import 'package:auto_connect_mobile/services/service_locator.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
-void main() {
+import 'configs/constants.dart';
+import 'configs/routes/local_routes.dart';
+import 'configs/theme/theme_app.dart';
+import 'services/navigator_service.dart';
+import 'view/rota-error-widget/rota_error_widget_view.dart';
+import 'widgets/no_glow_effect.dart';
+
+final routeObserver = RouteObserver<PageRoute>();
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  setupServiceLocator();
+
+  LicenseRegistry.addLicense(() async* {
+    final kleeOneLicence = await rootBundle.loadString('fonts/OFL.txt');
+    yield LicenseEntryWithLineBreaks(['google_fonts'], kleeOneLicence);
+  });
+
+  ErrorWidget.builder = (errorDetails) => const RotaErrorWidgetView();
+
   runApp(const MyApp());
 }
 
@@ -9,60 +34,30 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
+      debugShowCheckedModeBanner: false,
+      title: App.NAME,
+      themeMode: ThemeMode.light,
+      theme: ThemeApp.ligthTheme,
+      color: theme.primaryColor,
+      navigatorKey: getIt<NavigationService>().navigatorKey,
+      navigatorObservers: [routeObserver],
+      builder: (context, child) {
+        if (!getIt.isRegistered<BuildContext>()) {
+          getIt.registerSingleton<BuildContext>(context);
+        }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), 
+        return ScrollConfiguration(
+          behavior: const NoGlowEffect(),
+          child: child!,
+        );
+      },
+      localizationsDelegates: GlobalMaterialLocalizations.delegates,
+      supportedLocales: const [Locale('pt', 'BR')],
+      initialRoute: LocalRoutes.SPLASH_SCREEN,
+      onGenerateRoute: RouterApp.onGenerateRoute,
     );
   }
 }
