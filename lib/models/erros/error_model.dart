@@ -13,7 +13,7 @@ class ErrorModel implements Exception {
 
   ErrorModel.session({this.descricao, this.callback}) : type = ErrorType.session;
 
-  ErrorModel.expiredSession({this.descricao, this.callback}) : type = ErrorType.expiredToken;
+  ErrorModel.expiredSession({this.descricao, this.callback}) : type = ErrorType.expired_token;
 
   ErrorModel.type(this.descricao, this.type, {this.callback});
 

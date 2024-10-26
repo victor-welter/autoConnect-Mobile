@@ -47,7 +47,7 @@ dependencies:
   loading_animation_widget: ^1.2.0+4
   permission_handler: ^10.2.0
   shared_preferences: ^2.2.2
-  sqflite: ^2.2.3
+  sqflite: ^2.3.2
   auto_size_text: ^3.0.0
   path: ^1.8.2
   get_it: ^7.2.0

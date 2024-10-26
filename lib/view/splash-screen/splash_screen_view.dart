@@ -36,52 +36,35 @@ class _SplashScreenViewState extends State<SplashScreenView> {
 
     return Scaffold(
       backgroundColor: theme.primaryColor,
-      body: const _SplashBody(),
-    );
-  }
-}
-
-class _SplashBody extends StatelessWidget {
-  const _SplashBody({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        FadeWidget(
-          child: Container(
-            margin: const EdgeInsets.all(30),
-            child: Image.asset(
-              AssetsPath.LOGO,
-              fit: BoxFit.scaleDown,
-              height: 350,
-              width: 350,
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          FadeWidget(
+            child: Container(
+              margin: const EdgeInsets.all(30),
+              child: Image.asset(
+                AssetsPath.LOGO,
+                fit: BoxFit.scaleDown,
+                height: 350,
+                width: 350,
+              ),
             ),
           ),
-        ),
-        const SizedBox(height: 30),
-        const SlideWidget(child: _TitleApp()),
-      ],
-    );
-  }
-}
-
-class _TitleApp extends StatelessWidget {
-  const _TitleApp({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return const Center(
-      child: Column(
-        children: [
-          Text(
-            App.NAME,
-            style: TextStyle(fontSize: 20),
-          ),
-          SizedBox(height: 25),
-          CsCircularProgressIndicador.dark(),
+          const SizedBox(height: 30),
+          const SlideWidget(
+              child: Center(
+            child: Column(
+              children: [
+                Text(
+                  App.NAME,
+                  style: TextStyle(fontSize: 20),
+                ),
+                SizedBox(height: 25),
+                CsCircularProgressIndicador.dark(),
+              ],
+            ),
+          )),
         ],
       ),
     );
