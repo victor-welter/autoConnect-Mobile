@@ -17,8 +17,8 @@ abstract class _SessaoModel with Store {
   }
 
   // Dados do usuário
-  late int idUsuario;
-  late String email;
+  late int idUsuario = 0;
+  late String email = '';
   String? nome;
   ConfiguracoesModel configuracoes = ConfiguracoesModel(); //Configurações do usuário
 }

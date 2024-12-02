@@ -1,11 +1,16 @@
 // ignore_for_file: unused_element
 
+import 'package:auto_connect_mobile/configs/routes/local_routes.dart';
+import 'package:auto_connect_mobile/models/erros/error_model.dart';
+import 'package:auto_connect_mobile/services/service_locator.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
 import '../../configs/assets/assets_path.dart';
+import '../../controllers/usuarios/usuarios_controller.dart';
 import '../../models/sessao/login_model.dart';
+import '../../services/navigator_service.dart';
 import '../../widgets/animations/fade_widget.dart';
 import '../../widgets/cards/card_error_login.dart';
 import '../../widgets/cs_circular_progress_indicador.dart';
@@ -59,7 +64,36 @@ class _LoginViewState extends State<LoginView> {
     return 'Esconder senha';
   }
 
-  void _login() async {}
+  void _login() async {
+    FocusScope.of(context).unfocus();
+
+    if (stateView.loggingIn) {
+      return;
+    }
+
+    stateView.setLogginIn(value: true);
+
+    try {
+      if (formKey.currentState!.validate()) {
+        await Future.delayed(const Duration(seconds: 2));
+
+        formKey.currentState!.save();
+
+        await UsuariosController().login(login);
+
+        getIt<NavigationService>().pushNamedAndRemoveUntil(LocalRoutes.HOME);
+      }
+    } catch (err) {
+      if (err is ErrorModel) {
+        stateView.setErrorMessage(err.descricao!);
+      } else {
+        stateView.setErrorMessage(
+            'Ocorreu um erro desconhecido. Por favor, tente novamente.');
+      }
+    } finally {
+      stateView.setLogginIn(value: false);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +123,7 @@ class _LoginViewState extends State<LoginView> {
                     ),
                   ),
 
-                   const Flexible(
+                  const Flexible(
                     child: AutoSizeText(
                       'Seja bem-vindo(a) ao Auto Connect!',
                       maxLines: 2,

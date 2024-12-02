@@ -14,4 +14,6 @@ class LocalRoutes {
   static const SELECIONA_REGISTRO = '/seleciona-registro';
 
   static const DASHBOARD = '/dashboard';
+
+  static const CONECTA_BLUETOOTH = '/conecta-bluetooth';
 }

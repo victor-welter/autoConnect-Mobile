@@ -1,8 +1,10 @@
 // ignore_for_file: constant_identifier_names
 class WebRoutes {
-  static const LOGIN = '/api/Usuario/login';
+  static const LOGIN = '/usuario/login';
 
   static const REGISTRAR_USUARIO = '/api/Usuario/registrar';
+
+  static const REGISTRAR_COMBUSTIVEL = '/registro_combustivel/add_registro_combustivel';
 
   static const REGISTRAR_CATEGORIA = '/api/Categoria/registrar';
 

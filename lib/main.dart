@@ -19,6 +19,15 @@ void main() async {
 
   setupServiceLocator();
 
+  // Bloqueia a orientação do dispositivo como "Somente Retrato"
+  SystemChrome.setPreferredOrientations(
+    [
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ],
+  );
+
+
   LicenseRegistry.addLicense(() async* {
     final kleeOneLicence = await rootBundle.loadString('fonts/OFL.txt');
     yield LicenseEntryWithLineBreaks(['google_fonts'], kleeOneLicence);

@@ -16,6 +16,13 @@ mixin _$ConfiguracoesModel on _ConfiguracoesModel, Store {
       (_$biometriaComputed ??= Computed<int>(() => super.biometria,
               name: '_ConfiguracoesModel.biometria'))
           .value;
+  Computed<int>? _$synkedDataComputed;
+
+  @override
+  int get synkedData =>
+      (_$synkedDataComputed ??= Computed<int>(() => super.synkedData,
+              name: '_ConfiguracoesModel.synkedData'))
+          .value;
   Computed<int>? _$darkThemeComputed;
 
   @override
@@ -51,6 +58,22 @@ mixin _$ConfiguracoesModel on _ConfiguracoesModel, Store {
   set _biometria(int value) {
     _$_biometriaAtom.reportWrite(value, super._biometria, () {
       super._biometria = value;
+    });
+  }
+
+  late final _$_synkedDataAtom =
+      Atom(name: '_ConfiguracoesModel._synkedData', context: context);
+
+  @override
+  int get _synkedData {
+    _$_synkedDataAtom.reportRead();
+    return super._synkedData;
+  }
+
+  @override
+  set _synkedData(int value) {
+    _$_synkedDataAtom.reportWrite(value, super._synkedData, () {
+      super._synkedData = value;
     });
   }
 
@@ -101,6 +124,17 @@ mixin _$ConfiguracoesModel on _ConfiguracoesModel, Store {
   }
 
   @override
+  void setSynkedData(int value) {
+    final _$actionInfo = _$_ConfiguracoesModelActionController.startAction(
+        name: '_ConfiguracoesModel.setSynkedData');
+    try {
+      return super.setSynkedData(value);
+    } finally {
+      _$_ConfiguracoesModelActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void setDarkTheme(int value) {
     final _$actionInfo = _$_ConfiguracoesModelActionController.startAction(
         name: '_ConfiguracoesModel.setDarkTheme');
@@ -123,20 +157,10 @@ mixin _$ConfiguracoesModel on _ConfiguracoesModel, Store {
   }
 
   @override
-  void applyChanges(Map<dynamic, dynamic> data) {
-    final _$actionInfo = _$_ConfiguracoesModelActionController.startAction(
-        name: '_ConfiguracoesModel.applyChanges');
-    try {
-      return super.applyChanges(data);
-    } finally {
-      _$_ConfiguracoesModelActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   String toString() {
     return '''
 biometria: ${biometria},
+synkedData: ${synkedData},
 darkTheme: ${darkTheme},
 isDarkTheme: ${isDarkTheme},
 textFactor: ${textFactor}

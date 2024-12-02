@@ -1,3 +1,6 @@
+import 'package:auto_connect_mobile/view/conecta-bluetooth/conecta_bluetooth.dart';
+import 'package:auto_connect_mobile/view/home-screen/home_screen_view.dart';
+import 'package:auto_connect_mobile/view/sync-service/sync_service_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
@@ -6,6 +9,7 @@ import 'configs/routes/local_routes.dart';
 import 'models/sessao/sessao_model.dart';
 import 'services/service_locator.dart';
 import 'view/login/login_view.dart';
+import 'view/seleciona-registro/seleciona_registro_view.dart';
 import 'view/splash-screen/splash_screen_view.dart';
 import 'widgets/cs_app_bar.dart';
 import 'widgets/nenhuma_informacao.dart';
@@ -25,6 +29,41 @@ class RouterApp {
           settings: settings,
         );
 
+      case LocalRoutes.SYNC_SERVICE:
+        return _PageBuilder(
+          child: const SyncServiceView(),
+          settings: settings,
+        );
+
+      case LocalRoutes.HOME:
+        return _PageBuilder(
+          child: const HomeScreenView(),
+          settings: settings,
+        );
+
+      // case LocalRoutes.CADASTRO_USUARIO:
+      //   return _PageBuilder(
+      //     child: const _CadastroUsuarioView(),
+      //     settings: settings,
+      //   );
+
+      case LocalRoutes.SELECIONA_REGISTRO:
+        return _PageBuilder(
+          child: const SelecionaRegistroView(),
+          settings: settings,
+        );
+
+      // case LocalRoutes.DASHBOARD:
+      //   return _PageBuilder(
+      //     child: const _DashboardView(),
+      //     settings: settings,
+      //   );
+
+      case LocalRoutes.CONECTA_BLUETOOTH:
+        return _PageBuilder(
+          child: const ConectaBluetooth(),
+          settings: settings,
+        );
       default:
         return _PageBuilder(
           child: const _RotaInexistenteView(),

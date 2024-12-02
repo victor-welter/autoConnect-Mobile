@@ -14,12 +14,16 @@ abstract class _ConfiguracoesModel with Store {
 
   _ConfiguracoesModel.fromDatabase(Map data) {
     _biometria = data['BIOMETRIA'];
+    _synkedData = data['SYNKED_DATA'];
     _darkTheme = data['DARK_THEME'];
     _textFactor = data['TEXT_FACTOR'];
   }
 
   @observable
   int _biometria = CadOptions.NAO;
+
+  @observable
+  int _synkedData = CadOptions.NAO;
 
   @observable
   int _darkTheme = CadOptions.NAO;
@@ -34,6 +38,14 @@ abstract class _ConfiguracoesModel with Store {
 
   @computed
   int get biometria => _biometria;
+
+  @action
+  void setSynkedData(int value) {
+    _synkedData = value;
+  }
+
+  @computed
+  int get synkedData => _synkedData;
 
   @action
   void setDarkTheme(int value) {
@@ -53,11 +65,4 @@ abstract class _ConfiguracoesModel with Store {
 
   @computed
   double get textFactor => _textFactor;
-
-  @action
-  void applyChanges(Map data) {
-    _biometria = data['BIOMETRIA'];
-    _darkTheme = data['DARK_THEME'];
-    _textFactor = data['TEXT_FACTOR'];
-  }
 }

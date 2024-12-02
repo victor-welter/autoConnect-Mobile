@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../models/realtime-database/realtime_database_model.dart';
@@ -84,7 +85,8 @@ void launchURL(String? url) async {
   }
 }
 
-Widget clearField({required dynamic value, required VoidCallback onClear, Color? color}) {
+Widget clearField(
+    {required dynamic value, required VoidCallback onClear, Color? color}) {
   if (value == null || (value is String && value.isEmpty)) {
     return const SizedBox();
   }
@@ -103,7 +105,9 @@ void readRealtimeDatabase(Map map, RealtimeDatabaseModel object) {
   for (var key in map.keys) {
     String runtime = map[key].runtimeType.toString();
     //O runtimeType em modo Release fica alterando... Ocasionando esses 'minifield'
-    if (runtime == '_JsonMap' || runtime.contains('minifield') || runtime.contains('minified')) {
+    if (runtime == '_JsonMap' ||
+        runtime.contains('minifield') ||
+        runtime.contains('minified')) {
       final child = RealtimeDatabaseModel('${object.reference}/$key');
       object.child.add(child);
       readRealtimeDatabase(map[key], child);
@@ -151,4 +155,29 @@ String? validator(dynamic value, String message) {
 ///Retorna uma nova instância da lista clonada (Permite tipagem)
 List<T> cloneList<T>(List<dynamic> list) {
   return list.map((e) => e as T).toList();
+}
+
+Future<bool> requestPermissions() async {
+  List<Permission> permissions = [
+    Permission.camera,
+    Permission.storage,
+    Permission.bluetoothScan,
+    Permission.bluetoothConnect,
+    Permission.location,
+  ];
+  
+  int totalGranted = 0;
+  int totalPermissions = permissions.length;
+
+  for (final permission in permissions) {
+    try {
+      await permission.request();
+
+      if (await permission.isGranted) {
+        totalGranted++;
+      }
+    } catch (_) {}
+  }
+
+  return totalGranted == totalPermissions;
 }

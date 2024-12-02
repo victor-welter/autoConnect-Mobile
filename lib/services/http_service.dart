@@ -5,7 +5,7 @@ import 'package:dio/dio.dart';
 import '../utils/response_validate.dart';
 
 class HttpService {
-  static const String URL_BASE = 'https://sharp-manatee-divine.ngrok-free.app';
+  static const String URL_BASE = 'https://in-hideously-sturgeon.ngrok-free.app';
 
   ///Responsável por fazer requisições do tipo `GET`
   ///
